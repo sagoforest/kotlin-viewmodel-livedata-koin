@@ -28,29 +28,20 @@ import org.jetbrains.anko.toast
  */
 
 
-class ButtonsUI: LinearLayout {
+class ButtonsUI(context: Context, frameLayout: FrameLayout, viewModel: TestViewModel) : LinearLayout(context) {
 
-    constructor(context: Context?) : super(context) {
-        init()
-    }
 
-    private lateinit var frameLayout: FrameLayout
-    private lateinit var viewModel: TestViewModel
-
-    fun bindContext(frameLayout: FrameLayout, viewModel: TestViewModel) {
-        this.frameLayout = frameLayout
-        this.viewModel = viewModel
-    }
-
-    private fun init() = AnkoContext.createDelegate(this).apply {
-        button("Show Toast") {
-            onClick {
-                toast(viewModel.repoMessage)
+    init {
+        AnkoContext.createDelegate(this).apply {
+            button("Show Toast") {
+                onClick {
+                    toast(viewModel.repoMessage)
+                }
             }
-        }
-        button("Long snackbar") {
-            onClick {
-                longSnackbar(frameLayout, viewModel.message.value.toString())
+            button("Long snackbar") {
+                onClick {
+                    longSnackbar(frameLayout, viewModel.message.value.toString())
+                }
             }
         }
     }
@@ -58,5 +49,8 @@ class ButtonsUI: LinearLayout {
 }
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun ViewManager.buttonsView(theme: Int = 0, init: ButtonsUI.() -> Unit) =
-        ankoView(::ButtonsUI, theme) { init() }
+inline fun ViewManager.buttonsView(frameLayout: FrameLayout, viewModel: TestViewModel, theme: Int = 0) =
+        buttonsView(frameLayout, viewModel, theme) {}
+
+inline fun ViewManager.buttonsView(frameLayout: FrameLayout, viewModel: TestViewModel, theme: Int = 0, init: ButtonsUI.() -> Unit) =
+        ankoView({ ButtonsUI(it, frameLayout, viewModel) }, theme, init)

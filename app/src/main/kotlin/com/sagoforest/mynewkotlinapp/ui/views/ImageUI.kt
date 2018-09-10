@@ -24,17 +24,23 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  */
 
 
-class ImageUI : LinearLayout {
+class ImageUI(context: Context,
+              private val viewModel: TestViewModel,
+              lifecycleOwner: LifecycleOwner) : LinearLayout(context) {
+
     private lateinit var image: ImageView
-    private lateinit var viewModel: TestViewModel
 
-    constructor(context: Context?) : super(context) {
-        init()
-    }
-
-    fun bindContext(viewModel: TestViewModel, lifeCycleOwner: LifecycleOwner) {
-        this.viewModel = viewModel
-        viewModel.isClicked.observe(lifeCycleOwner, Observer { it?.let { updateColor(it) } })
+    init {
+        AnkoContext.createDelegate(this).apply {
+            gravity = CENTER
+            padding = dip(24)
+            image = imageView(imageResource = R.drawable.ic_android_black_24dp) {
+                onClick { viewModel.toggleClicked() }
+                padding = dip(8)
+                layoutParams = LinearLayout.LayoutParams(dip(48), dip(48))
+            }
+            viewModel.isClicked.observe(lifecycleOwner, Observer { it?.let { updateColor(it) } })
+        }
     }
 
     private fun updateColor(isClicked: Boolean) {
@@ -43,17 +49,11 @@ class ImageUI : LinearLayout {
         image.imageTintList = ColorStateList.valueOf(color)
     }
 
-    private fun init() = AnkoContext.createDelegate(this).apply {
-        gravity = CENTER
-        padding = dip(24)
-        image = imageView(imageResource = R.drawable.ic_android_black_24dp) {
-            onClick { viewModel.toggleClicked() }
-            padding = dip(8)
-            layoutParams = LinearLayout.LayoutParams(dip(48), dip(48))
-        }
-    }
 }
 
 @Suppress("NOTHING_TO_INLINE")
-inline fun ViewManager.imageView(theme: Int = 0, init: ImageUI.() -> Unit) =
-        ankoView(::ImageUI, theme) { init(); }
+inline fun ViewManager.imageView(viewModel: TestViewModel, lifecycleOwner: LifecycleOwner, theme: Int = 0) =
+        imageView(viewModel, lifecycleOwner, theme) {}
+
+inline fun ViewManager.imageView(viewModel: TestViewModel, lifecycleOwner: LifecycleOwner, theme: Int = 0, init: ImageUI.() -> Unit) =
+        ankoView({ ImageUI(it, viewModel, lifecycleOwner) }, theme, init)
