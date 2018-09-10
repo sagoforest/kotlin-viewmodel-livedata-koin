@@ -30,14 +30,9 @@ class MainActivityUI : AnkoComponent<MainActivity> {
                 topMargin = dip(30)
             }
 
-            imageView {
-                bindContext(viewModel, ui.owner)
-            }
+            imageView(viewModel, ui.owner)
 
-            buttonsView {
-                bindContext(this@frameLayout, viewModel)
-
-            }.lparams {
+            buttonsView(this@frameLayout, viewModel).lparams {
                 gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
                 bottomMargin = dip(72)
             }
