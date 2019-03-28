@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. This belongs to ANDY!!
+ */
+
 package com.sagoforest.mynewkotlinapp
 
 import android.support.test.InstrumentationRegistry

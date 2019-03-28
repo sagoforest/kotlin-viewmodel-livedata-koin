@@ -1,7 +1,12 @@
+/*
+ * Copyright (c) 2018. This belongs to ANDY!!
+ */
+
 package com.sagoforest.mynewkotlinapp.ui.views
 
 import android.view.Gravity
 import org.jetbrains.anko.*
+import org.jetbrains.anko.custom.customView
 import org.jetbrains.anko.sdk25.coroutines.textChangedListener
 
 /**
@@ -35,6 +40,13 @@ class MainActivityUI : AnkoComponent<MainActivity> {
             buttonsView(this@frameLayout, viewModel).lparams {
                 gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
                 bottomMargin = dip(72)
+            }
+
+            myButton {
+                btext = "hello"
+                command = {
+                    toast("hi")
+                }
             }
         }
     }

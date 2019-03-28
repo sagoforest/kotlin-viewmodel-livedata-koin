@@ -1,5 +1,9 @@
 
 
+/*
+ * Copyright (c) 2018. This belongs to ANDY!!
+ */
+
 package com.sagoforest.mynewkotlinapp.ui.views
 
 import android.os.Bundle

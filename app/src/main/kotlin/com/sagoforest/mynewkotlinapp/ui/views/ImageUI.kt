@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. This belongs to ANDY!!
+ */
+
 package com.sagoforest.mynewkotlinapp.ui.views
 
 import android.arch.lifecycle.LifecycleOwner
@@ -24,9 +28,7 @@ import org.jetbrains.anko.sdk25.coroutines.onClick
  */
 
 
-class ImageUI(context: Context,
-              private val viewModel: TestViewModel,
-              lifecycleOwner: LifecycleOwner) : LinearLayout(context) {
+class ImageUI(context: Context, viewModel: TestViewModel, lifecycleOwner: LifecycleOwner) : LinearLayout(context) {
 
     private lateinit var image: ImageView
 
